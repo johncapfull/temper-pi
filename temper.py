@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys, time
 import json
 from daemon import daemon_main
