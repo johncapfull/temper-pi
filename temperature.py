@@ -1,4 +1,4 @@
-import time
+import time from time
 import datetime
 import urllib2
 import httplib
@@ -24,17 +24,26 @@ def query():
 
     return temperatures
 
-def send():
-    time = datetime.datetime.now().isoformat('T')
-    celsius = query()[0]
+# accept input of query and unix time
+def format(values, time):
+    time = int(time.time())
+
+    request = {}
+    request["time"] = str(int(time))
+    request["sensors"] = values
+
+    jsonReq = json.dumps(request);
+    print(jsonReq)
+
+
+def send(query):
+#   print request
 
     request = (
-	config.temperature["add_url"] + 
-	"?time=" + time + 
-	"&celsius=" + str(celsius)
+       config.temperature["add_url"] + 
+       "?time=" + time + 
+       "&celsius=" + str(celsius)
     )
-
-#   print request
 
     try:
         r = urllib2.urlopen(request)
