@@ -129,15 +129,15 @@ class Daemon:
 		"""
 
 class FunctionDaemon(Daemon):
-    def __init__(self, function, pidfile):
-	Daemon.__init__(self, pidfile)
+    def __init__(self, function, pidfile, logfile):
+	Daemon.__init__(self, pidfile, '/dev/null', logfile, logfile + '.err')
 	self.function = function
 
     def run(self):
-	function()
+	self.function()
 
-def daemon_main(pidfile, function):
-    daemon = FunctionDaemon(pidfile, function)
+def daemon_main(function, pidfile, logfile='/dev/null'):
+    daemon = FunctionDaemon(function, pidfile, logfile)
     if len(sys.argv) == 2:
 	if 'start' == sys.argv[1]:
 	    daemon.start()
