@@ -49,7 +49,11 @@ def send():
     url = config.temper["add_url"]
     headers = {'content-type': 'application/json'}
 
-    r = requests.post(url, data=payload, headers=headers)
+    try:
+        r = requests.post(url, data=payload, headers=headers)
+    except requests.ConnectionError:
+        print(time.ctime())
+        print("Connection error")
 
     if r.status_code != requests.codes.ok:
         print(time.ctime())
